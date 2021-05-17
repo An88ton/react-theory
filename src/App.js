@@ -55,7 +55,7 @@ class App extends Component {
                                 key={index}
                                 name={car.name}
                                 year={car.year}
-                                onChangeTitle={this.changeTitleHandler.bind(this, car.name)}
+                                onChangeName={() => this.onChangeName(car.name)}
                             />
                         )
                     })
