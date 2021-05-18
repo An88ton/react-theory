@@ -21,14 +21,23 @@ class App extends Component {
     }
 
     onChangeName(name, index) {
-        console.log(name, index);
         const car = this.state.cars[index];
         car.name = name;
+        const cars = [...this.state.cars];
+        cars[index] = car;
+        this.setState({cars})
     }
     handleInput = (event) => {
         this.setState({
             pageTitle: event.target.value
         });
+    }
+
+
+    deleteHandler(index) {
+        const cars = this.state.cars.concat();
+        cars.splice(index, 1);
+        this.setState({cars});
     }
 
     render() {
@@ -39,7 +48,7 @@ class App extends Component {
 
         return (
             <div style={divStyle}>
-                <h1 style={{color: "green"}}>{this.state.pageTitle}</h1>
+                <h1 style={{color: "green"}}>{this.state.pageTitle || 'Cars'}</h1>
 
                 <input type="text" onChange={this.handleInput}/>
                 <br />
@@ -49,6 +58,11 @@ class App extends Component {
                 >Toggle cars
                 </button>
 
+                <div style={{
+                    width: 400,
+                    margin: 'auto',
+                    paddingTop: '20px'
+                }}>
                 {this.state.showCars
                     ? this.state.cars.map((car, index) => {
                         return (
@@ -56,29 +70,14 @@ class App extends Component {
                                 key={index}
                                 name={car.name}
                                 year={car.year}
+                                onDelete={this.deleteHandler.bind(this, index)}
                                 onChangeName={(event) => this.onChangeName(event.target.value, index)}
                             />
                         )
                     })
                     :
                         null}
-                {/*<Car*/}
-                {/*    name={cars[0].name}*/}
-                {/*    year={cars[0].year}*/}
-                {/*    onChangeTitle={this.changeTitleHandler.bind(this, cars[0].name)}*/}
-                {/*/>*/}
-                {/*<Car*/}
-                {/*    name={cars[1].name}*/}
-                {/*    year={cars[1].year}*/}
-                {/*    onChangeTitle={this.changeTitleHandler.bind(this, cars[1].name)}*/}
-                {/*>*/}
-                {/*    <p style={{color: "red"}}>Color</p>*/}
-                {/*</Car>*/}
-                {/*<Car*/}
-                {/*    name={cars[2].name}*/}
-                {/*    year={cars[2].year}*/}
-                {/*    onChangeTitle={ () => this.changeTitleHandler(cars[2].name)}*/}
-                {/*/>*/}
+                </div>
             </div>
         );
     }

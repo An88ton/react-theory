@@ -1,27 +1,34 @@
+import React from "react";
+import './Car.css';
 
-// class Car extends Component{
-//     render() {
-//         const divStyle = {
-//           textAlign: 'left'
-//         };
-//         return (
-//             <div style={divStyle}>
-//                 <h1 style={{color: "red", fontSize: "50px"}}>Car component</h1>
-//             </div>
-//         )
-//     }
-// }
+export default props => {
+    const inputClasses = ['input']
+    if(props.name !== '') {
+        inputClasses.push('green');
+    }else {
+        inputClasses.push('red');
+    }
 
-const car = (props) => (
-    <div style={{
+    if(props.name.length > 3) {
+        inputClasses.push('bold');
+    }
+
+    const style = {
         border: '1px solid #ccc',
-        marginBottom: '10px'
-    }}>
-        <h3>Car name: {props.name}</h3>
-        <p>Year: <strong>{props.year}</strong></p>
-        <input type="text" onChange={props.onChangeName}/>
-        {<button onClick={props.onChangeTitle}>Click</button>}
-    </div>
-)
+        boxShadow: '0 4px 5px 0 rgba(0, 0, 0, .14)'
+    }
 
-export default car;
+    return (
+        <div className="Car" style={style}>
+            <h3>Car name: {props.name}</h3>
+            <p>Year: <strong>{props.year}</strong></p>
+            <input
+                type="text"
+                onChange={props.onChangeName}
+                value={props.name}
+                className={inputClasses.join(" ")}
+            />
+            {<button onClick={props.onDelete}>Delete</button>}
+        </div>
+    )
+}
